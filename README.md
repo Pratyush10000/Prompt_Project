@@ -53,16 +53,26 @@ phq9_app/
 
 ## Quick Start
 
-### 1. Install dependencies
+### 1. Navigate to the project directory
+```bash
+cd Golden_response/phq9_app
+```
+
+### 2. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Train the model
+### 3. Train the model
 ```bash
-cd Golden_response/phq9_app
 python train.py
 ```
+
+### 4. Run the development server
+```bash
+python app/app.py
+```
+```bash
 This produces `model/xgb_model.pkl`, `model/shap_explainer.pkl`, and `model/feature_names.pkl`.
 
 **Actual model metrics (5-fold CV):**
@@ -73,13 +83,11 @@ This produces `model/xgb_model.pkl`, `model/shap_explainer.pkl`, and `model/feat
 | R² (test set) | 0.992 |
 | MAE (5-fold CV) | 0.429 |
 
-### 3. Run the development server
-```bash
-python app/app.py
+
 ```
 Open https://mindful-check-2.onrender.com/
 
-### 4. Production deployment (Gunicorn)
+### 5. Production deployment (Gunicorn)
 ```bash
 gunicorn wsgi:app --bind 0.0.0.0:5000 --workers 2
 ```
