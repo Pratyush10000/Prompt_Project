@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mindful Check · PHQ-9 Wellness Assessment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="topnav">
+    <div class="nav-inner">
+      <div class="brand">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="10" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="11" cy="11" r="4" fill="currentColor" opacity=".25"/>
+          <circle cx="11" cy="11" r="1.5" fill="currentColor"/>
+        </svg>
+        <span>Mindful Check</span>
+      </div>
+      <span class="nav-pill">Awareness tool · not a diagnosis</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">PHQ-9 Wellbeing Assessment</p>
+      <h1 class="hero-title">How have you been<br><em>feeling lately?</em></h1>
+      <p class="hero-body">Answer 14 questions. Get a personalised, AI-explained snapshot of your emotional wellbeing — with gentle, actionable suggestions.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="stat-n">~3</span><span class="stat-l">minutes</span></div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat"><span class="stat-n">14</span><span class="stat-l">questions</span></div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat"><span class="stat-n">0</span><span class="stat-l">data stored</span></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="art-ring r1"></div>
+      <div class="art-ring r2"></div>
+      <div class="art-ring r3"></div>
+      <div class="art-dot d1"></div>
+      <div class="art-dot d2"></div>
+      <div class="art-dot d3"></div>
+    </div>
+  </section>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-strip">
+    <div class="progress-inner">
+      <div class="prog-step active" data-step="1">
+        <div class="prog-node"><span>1</span></div>
+        <span class="prog-label">About you</span>
+      </div>
+      <div class="prog-line"></div>
+      <div class="prog-step" data-step="2">
+        <div class="prog-node"><span>2</span></div>
+        <span class="prog-label">Wellbeing</span>
+      </div>
+      <div class="prog-line"></div>
+      <div class="prog-step" data-step="3">
+        <div class="prog-node"><span>3</span></div>
+        <span class="prog-label">Results</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main class="main">
+    <form id="phqForm" novalidate>
+
+      <!-- STEP 1: ABOUT YOU -->
+      <section class="step-section" id="step1">
+        <div class="section-head">
+          <span class="section-tag">Step 1</span>
+          <h2 class="section-title">A little about you</h2>
+          <p class="section-sub">Used to personalise your results. Never stored.</p>
+        </div>
+        <div class="about-grid">
+
+          <div class="field-block">
+            <label class="field-label" for="age">Age</label>
+            <input class="field-input" type="number" id="age" name="age" min="10" max="100" placeholder="e.g. 22" required />
+          </div>
+
+          <div class="field-block">
+            <label class="field-label">Gender</label>
+            <div class="toggle-group" id="genderToggle">
+              <button type="button" class="toggle-btn" data-val="Male">Male</button>
+              <button type="button" class="toggle-btn" data-val="Female">Female</button>
+            </div>
+            <input type="hidden" id="gender" name="gender" />
+          </div>
+
+          <div class="field-block">
+            <label class="field-label">Sleep quality lately</label>
+            <div class="scale-group" id="sleepToggle" data-field="sleep_quality">
+              <button type="button" class="scale-btn" data-val="Good">Good</button>
+              <button type="button" class="scale-btn" data-val="Average">Average</button>
+              <button type="button" class="scale-btn" data-val="Bad">Poor</button>
+              <button type="button" class="scale-btn" data-val="Worst">Very poor</button>
+            </div>
+            <input type="hidden" id="sleep_quality" name="sleep_quality" />
+          </div>
+
+          <div class="field-block">
+            <label class="field-label">Study / work pressure</label>
+            <div class="scale-group" id="studyToggle" data-field="study_pressure">
+              <button type="button" class="scale-btn" data-val="Good">Low</button>
+              <button type="button" class="scale-btn" data-val="Average">Average</button>
+              <button type="button" class="scale-btn" data-val="Bad">High</button>
+              <button type="button" class="scale-btn" data-val="Worst">Very high</button>
+            </div>
+            <input type="hidden" id="study_pressure" name="study_pressure" />
+          </div>
+
+          <div class="field-block">
+            <label class="field-label">Financial pressure</label>
+            <div class="scale-group" id="finToggle" data-field="financial_pressure">
+              <button type="button" class="scale-btn" data-val="Good">None</button>
+              <button type="button" class="scale-btn" data-val="Average">Some</button>
+              <button type="button" class="scale-btn" data-val="Bad">High</button>
+              <button type="button" class="scale-btn" data-val="Worst">Very high</button>
+            </div>
+            <input type="hidden" id="financial_pressure" name="financial_pressure" />
+          </div>
+
+        </div>
+        <div class="step-footer">
+          <button type="button" class="btn-next" id="toStep2Btn">Continue <span class="arrow">→</span></button>
+        </div>
+      </section>
+
+      <!-- STEP 2: PHQ-9 -->
+      <section class="step-section hidden" id="step2">
+        <div class="section-head">
+          <span class="section-tag">Step 2</span>
+          <h2 class="section-title">Over the past two weeks…</h2>
+          <p class="section-sub">How often have you been bothered by the following?</p>
+        </div>
+        <div class="question-progress">
+          <div class="q-prog-bar"><div id="qProgFill" class="q-prog-fill" style="width:0%"></div></div>
+          <span id="qProgLabel" class="q-prog-label">0 / 9 answered</span>
+        </div>
+        <div id="phq-questions" class="q-stack"></div>
+        <div class="step-footer two-col">
+          <button type="button" class="btn-back" id="toStep1Btn">← Back</button>
+          <button type="submit" id="submitBtn" class="btn-submit">
+            <span class="btn-text">See my results</span>
+            <span class="btn-spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </section>
+
+    </form>
+
+    <!-- ERROR -->
+    <div id="errorBanner" class="error-toast hidden" role="alert"></div>
+
+    <!-- RESULTS -->
+    <section id="resultsSection" class="results hidden" aria-live="polite">
+
+      <div class="results-hero">
+        <span class="section-tag">Your results</span>
+        <h2 class="results-title">Your wellness snapshot</h2>
+        <p class="results-sub">A compassionate estimate — not a clinical diagnosis.</p>
+      </div>
+
+      <!-- Score cards -->
+      <div class="score-grid">
+        <div class="score-card primary-score">
+          <div class="score-ring-wrap">
+            <svg class="score-ring" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="ring-track" cx="60" cy="60" r="50" />
+              <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="50"
+                stroke-dasharray="0 314" stroke-dashoffset="78" />
+            </svg>
+            <div class="score-inner">
+              <span id="scoreNum" class="score-num">—</span>
+              <span class="score-denom">/ 27</span>
+            </div>
+          </div>
+          <p class="score-card-label">PHQ-9 Score</p>
+        </div>
+
+        <div class="score-card severity-card">
+          <div class="sev-icon" id="sevIcon">◐</div>
+          <p id="severityText" class="sev-text">—</p>
+          <p class="score-card-label">Severity level</p>
+        </div>
+
+        <div class="score-card conf-card">
+          <div class="conf-arc-wrap">
+            <svg class="conf-arc" viewBox="0 0 100 60" aria-hidden="true">
+              <path class="arc-track" d="M10 55 A 40 40 0 0 1 90 55" />
+              <path class="arc-fill" id="arcFill" d="M10 55 A 40 40 0 0 1 90 55"
+                stroke-dasharray="0 126" />
+            </svg>
+            <p id="confNum" class="conf-num">—</p>
+          </div>
+          <p class="score-card-label">Model confidence</p>
+        </div>
+      </div>
+
+      <!-- Factors -->
+      <div class="result-panel">
+        <div class="panel-head">
+          <h3 class="panel-title">What shaped this estimate</h3>
+          <p class="panel-sub">Based on the most influential factors in your responses.</p>
+        </div>
+        <ul id="explanationList" class="factor-list"></ul>
+      </div>
+
+      <!-- Suggestions -->
+      <div class="result-panel suggestions-panel">
+        <div class="panel-head">
+          <h3 class="panel-title">Supportive suggestions</h3>
+          <p class="panel-sub">Small steps that may help, tailored to what stood out most.</p>
+        </div>
+        <ul id="suggestionList" class="sug-list"></ul>
+      </div>
+
+      <!-- Actions -->
+      <div class="result-actions">
+        <button id="downloadBtn" class="btn-download">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 2v8M5 7l3 3 3-3M3 13h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Download PDF report
+        </button>
+        <button id="retakeBtn" class="btn-retake">Retake assessment</button>
+      </div>
+
+      <div class="disclaimer">
+        <strong>Important:</strong> This tool is for educational awareness only and does not replace professional medical advice, diagnosis, or treatment. If you are experiencing significant distress, please speak with a qualified mental health professional or your GP.
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>XGBoost · SHAP explainability · No data stored</span>
+  </footer>
+
+  <script src="/static/js/questions.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
