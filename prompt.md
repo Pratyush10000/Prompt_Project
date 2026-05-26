@@ -169,14 +169,12 @@ Suggestions should remain:
 
 ## Framework Requirements
 
+
 Use:
 
-- Flask
-   Purpose: Backend API framework for routing ,request handling, and server-side logic.
+- Flask 
 - Python
-   Purpose: Core programming language used for machine learning, backend development, and data processing.
 - Gunicorn
-   Purpose: Production-grade WSGI server used to deploy the Flask application efficiently.
 
 ## API Requirements
 
@@ -450,65 +448,56 @@ The system must:
 Use:
 
 - Python
-  Purpose: Core programming language used for machine learning, backend development, and data processing.
+
 
 - NumPy
-  Purpose: Performs numerical computations and array-based mathematical operations.
+
 
 - Pandas
-  Purpose: Handles dataset loading, cleaning, preprocessing, and tabular data manipulation.
+
 
 - SHAP
-  Purpose: Explains which features most influenced each prediction.
+  
 
 - Scikit-learn
-  Purpose: Provides preprocessing pipelines, validation utilities, and ML workflow tools.
+
 
 - XGBoost
-  Purpose: Regression model used for PHQ score prediction and high-performance inference.
+  
 
 ## Backend
 
 Use:
 
 - Flask
-  Purpose: Backend API framework for routing, request handling, and server-side logic.
 
 - Gunicorn
-  Purpose: Production-grade WSGI server used for scalable Flask deployment.
 
 - dotenv
-  Purpose: Loads environment variables securely from configuration files.
 
 ## Frontend
 
 Use:
 
 - HTML
-  Purpose: Structures the frontend interface and application layout.
 
 - CSS
-  Purpose: Styles the UI with responsive and accessible design.
 
 - JavaScript
-  Purpose: Handles frontend interactivity, asynchronous requests, and dynamic UI updates.
 
 ## Reporting
 
 Use:
 
 - ReportLab
-  Purpose: Generates downloadable and professionally formatted PDF assessment reports.
 
 ## Optional Database Support
 
 - MongoDB
-  Purpose: Optional NoSQL database for storing user assessments and application data.
 
 - PostgreSQL
-  Purpose: Optional relational database for structured and scalable data persistence.
 
-  
+
 # Output Requirements
 
 Generate the project in the following order:
