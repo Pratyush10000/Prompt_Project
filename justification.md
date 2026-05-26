@@ -1,3 +1,2 @@
-# Justification 
 
 Response B (Gemini) is better than Response A (ChatGPT) in terms of correctness, completeness, and production quality. B correctly loads artifacts only once at startup using a thread-safe initialization approach, while A reloads them on every health check request. B also includes proper 5-fold cross-validation and uses the modern OneHotEncoder configuration with sparse_output=False, both of which align with the prompt requirements. In addition, B provides pinned dependencies, structured PDF reports, better frontend design, loading states, accessibility improvements, and more realistic SHAP-based explanations. In contrast, A feels more like a basic prototype with minimal UI, shallow implementations, and missing production-level features.
