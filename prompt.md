@@ -1,7 +1,9 @@
 # Context and Role
 
-Act as a Senior Full-Stack Machine Learning Engineer, Explainable AI Researcher, and Enterprise Software Architect. The role includes creating a production-level mental health awareness platform that uses Explainable AI technology.  
-The system needs to assess emotional distress levels through PHQ-9 questionnaire responses, and it should produce continuous PHQ score predictions through regression analysis, generate SHAP-based explanations that humans can understand, and produce PDF reports for download while showing results through a user interface that promotes relaxation, support, and accessibility.  
+Act as a Senior Full-Stack Machine Learning Engineer, Explainable AI Researcher, and Enterprise Software Architect. The role includes creating a production-level mental health awareness platform that uses Explainable AI technology.
+
+The system needs to assess emotional distress levels through PHQ-9 questionnaire responses, and it should produce continuous PHQ score predictions through regression analysis, generate SHAP-based explanations that humans can understand, and produce PDF reports for download while showing results through a user interface that promotes relaxation, support, and accessibility.
+
 The application needs to follow clean architecture principles while developers build it through modular development and scalable engineering standards, which support ethical communication and produce maintainable software that works in production environments.
 
 # Objective
@@ -14,7 +16,8 @@ The application needs to follow clean architecture principles while developers b
 - Include a modern, responsive frontend interface.
 - Generate downloadable PDF assessment reports.
 - Maintain a secure, modular, and scalable backend architecture.
-- Use the user-provided dataset at `data/phq9.csv` for all training and inference. Do not use synthetic data under any circumstances.
+- Use the user-provided dataset at `data/phq9.csv` for all training and inference.
+- Do not use synthetic data under any circumstances.
 
 # Important Domain and Ethical Requirements
 
@@ -56,7 +59,8 @@ The system must:
 
 Implement preprocessing pipelines that:
 
-- Handle missing values appropriately. The imputation strategy used must be documented in code comments.
+- Handle missing values appropriately.
+- The imputation strategy used must be documented in code comments.
 - Support categorical encoding (e.g., one-hot or ordinal as appropriate per column).
 - Support numeric feature scaling if necessary.
 - Prevent data leakage — all transformations must be fit only on training data, never on the full dataset.
@@ -67,13 +71,16 @@ Implement preprocessing pipelines that:
 Include:
 
 - Implement a proper train/test split strategy (e.g., 80/20).
-- Model evaluation metrics: MAE, RMSE, and R² at minimum.
+- Model evaluation metrics:
+  - MAE
+  - RMSE
+  - R²
 - Cross-validation if the dataset size warrants it.
 - Proper schema validation checks before training and before inference.
 
 The system must not:
 
-- Create Fabricate dataset statistics.
+- Create fabricated dataset statistics.
 - Invent evaluation metrics.
 - Claim unsupported model performance.
 
@@ -89,20 +96,22 @@ Build a regression-based machine learning pipeline that:
 
 ## Severity Mapping
 
-Map PHQ scores into:
-
-- Minimal : 0-4
-- Mild: 5-9
-- Moderate: 10-14
-- Moderately Severe:15-19
-- Severe: 20-27
+| Severity Level | PHQ Score Range |
+|---|---|
+| Minimal | 0–4 |
+| Mild | 5–9 |
+| Moderate | 10–14 |
+| Moderately Severe | 15–19 |
+| Severe | 20–27 |
 
 ## Model Persistence
 
 The system should save and cleanly load at startup:
 
 - `model/phq9_pipeline.pkl` — trained preprocessing and model pipeline.
-- `model/shap_explainer.pkl` — fitted SHAP explainer. Use `shap.TreeExplainer` for XGBoost. Fall back to `shap.KernelExplainer` only if necessary, with a documented reason.
+- `model/shap_explainer.pkl` — fitted SHAP explainer.
+  - Use `shap.TreeExplainer` for XGBoost.
+  - Fall back to `shap.KernelExplainer` only if necessary, with a documented reason.
 - `model/feature_names.json` — ordered list of feature names used during training.
 
 All artifacts must load at Flask startup without requiring retraining.
@@ -111,7 +120,7 @@ All artifacts must load at Flask startup without requiring retraining.
 
 ## SHAP Integration
 
-Using SHAP to:
+Use SHAP to:
 
 - Discover influential features per prediction.
 - Rank influential features by SHAP contribution magnitude.
@@ -122,14 +131,24 @@ Using SHAP to:
 The explainability system must:
 
 - Convert SHAP outputs into insights that are easy to understand.
-- Use simple, emotionally safe language when explaining predictions to end users and avoid technical AI terminology.
+- Use simple, emotionally safe language when explaining predictions to end users.
+- Avoid technical AI terminology.
 - Generate explanations that are supportive and considerate of users' feelings.
 - Be careful not to make things sound more certain than they really are.
 
-## Example of required transformation
+### Example of Required Transformation
 
-Wrong: "Feature 'sleep_quality' has a SHAP value of -1.43."  
-Correct: "Sleep quality appeared to be a notable factor in your results. Difficulty sleeping can sometimes affect how we feel overall."
+#### Wrong
+
+```text
+Feature 'sleep_quality' has a SHAP value of -1.43.
+```
+
+#### Correct
+
+```text
+Sleep quality appeared to be a notable factor in your results. Difficulty sleeping can sometimes affect how we feel overall.
+```
 
 ## Suggestion Generation
 
@@ -156,45 +175,55 @@ Use:
 - Python
 - Gunicorn
 
-## Requirements for API
+## API Requirements
 
-Implement backend routes for:
+### 1. Home Route
 
-1. **Home Route**  
-   Route: `/`  
-   Method: `GET`  
-   Purpose: Renders the home page of the application.
+| Property | Value |
+|---|---|
+| Route | `/` |
+| Method | `GET` |
+| Purpose | Renders the home page of the application. |
 
-2. **Prediction Route**  
-   Route: `/predict`  
-   Method: `POST`  
-   Purpose: Accepts user input payload and returns the prediction result in JSON format along with explanations.
+### 2. Prediction Route
 
-3. **Report Generation Route**  
-   Route: `/report`  
-   Method: `POST`  
-   Purpose: Accepts the prediction result and generates a downloadable PDF report.
+| Property | Value |
+|---|---|
+| Route | `/predict` |
+| Method | `POST` |
+| Purpose | Accepts user input payload and returns the prediction result in JSON format along with explanations. |
 
-4. **Health Check Route**  
-   Route: `/health`  
-   Method: `GET`  
-   Purpose: Returns the system health status and confirms whether the ML model is loaded successfully.
+### 3. Report Generation Route
 
-## Functionality of Backend
+| Property | Value |
+|---|---|
+| Route | `/report` |
+| Method | `POST` |
+| Purpose | Accepts the prediction result and generates a downloadable PDF report. |
 
-The backend should do:
+### 4. Health Check Route
+
+| Property | Value |
+|---|---|
+| Route | `/health` |
+| Method | `GET` |
+| Purpose | Returns the system health status and confirms whether the ML model is loaded successfully. |
+
+## Backend Functionality
+
+The backend should:
 
 - Dynamically load trained models.
 - Load SHAP explainers efficiently during runtime initialization.
-- Incoming payloads should be validated.
+- Validate incoming payloads.
 - Predict PHQ scores.
 - Generate severity levels.
-- Produce proper explanations and suggestions.
-- Structured JSON responses should be returned.
+- Produce explanations and suggestions.
+- Return structured JSON responses.
 
 ## Input Payload Schema
 
-The `/predict` endpoint expects the following fields at minimum. Additional fields are inferred dynamically from the dataset schema:
+The `/predict` endpoint expects the following fields at minimum. Additional fields are inferred dynamically from the dataset schema.
 
 ```json
 {
@@ -204,87 +233,99 @@ The `/predict` endpoint expects the following fields at minimum. Additional fiel
   "study_pressure": "integer, required, range 1–5",
   "financial_pressure": "integer, required, range 1–5"
 }
+```
 
-Security and Validations
+## Security and Validation Requirements
 
-It should implement:
+Implement:
 
-Type and range validation on all inputs before inference.
-Structured JSON error responses with appropriate HTTP status codes.
-Safely parse and validate incoming requests
-Use environment variables securely for configuration management.
-Securely handle configuration
-Frontend Requirements
-Requirements for UI Design
+- Type and range validation on all inputs before inference.
+- Structured JSON error responses with appropriate HTTP status codes.
+- Safe parsing and validation of incoming requests.
+- Secure environment variable handling for configuration management.
+- Secure configuration management practices.
 
-Planning a clean responsive UI alongside healthcare design and the following features::
+# Frontend Requirements
 
-PHQ-9 questionnaire form
-Registered age input
-Gender input
-Sleep quality input
-Study pressure input
-Financial pressure input
-Result Display Requirements
+## UI Design Requirements
+
+Plan a clean, responsive healthcare-oriented UI with the following features:
+
+- PHQ-9 questionnaire form
+- Registered age input
+- Gender input
+- Sleep quality input
+- Study pressure input
+- Financial pressure input
+
+## Result Display Requirements
 
 Display:
 
-Estimated PHQ Score
-Severity level
-Confidence level (clearly labeled as a calibrated estimate, not a certainty)
-Severity category visualization
-Confidence visualization bar
-Explanation table (in plain, non-technical language)
-Supportive recommendations
-Medical disclaimer — always visible near results, not hidden
-User Experience Requirements
+- Estimated PHQ Score
+- Severity level
+- Confidence level
+  - Clearly labeled as a calibrated estimate, not a certainty
+- Severity category visualization
+- Confidence visualization bar
+- Explanation table in plain, non-technical language
+- Supportive recommendations
+- Medical disclaimer
+  - Always visible near results
+  - Never hidden
+
+## User Experience Requirements
 
 The frontend should:
 
-Be mobile-optimized.
-Use accessible labels and fonts as well.
-Allow the asynchronous submission of a form with fetch.
-Display loading states gracefully.
-Provide clear validation feedback for incomplete or invalid form inputs.
-No page refreshes.
-Present results in a calm and understandable way.
-Animation and Interaction Requirements
+- Be mobile-optimized.
+- Use accessible labels and fonts.
+- Allow asynchronous form submission using fetch.
+- Display loading states gracefully.
+- Provide clear validation feedback for incomplete or invalid form inputs.
+- Avoid page refreshes.
+- Present results in a calm and understandable way.
+
+## Animation and Interaction Requirements
 
 Include:
 
-Smooth transitions
-User-friendly UI
-Distraction-free animations
-Performance-friendly rendering
-Requirements for PDF Reporting
+- Smooth transitions
+- User-friendly UI
+- Distraction-free animations
+- Performance-friendly rendering
 
-Generate downloadable PDF reports containing:
+# PDF Reporting Requirements
 
-Date of assessment
-PHQ score
-Level of severity
-Confidence prediction
-Summary of risks
-Key contributing factors affecting the prediction.
-Support recommendations
-Medical disclaimer
-Requirements for PDF Design
+## Generate Downloadable PDF Reports Containing
+
+- Date of assessment
+- PHQ score
+- Level of severity
+- Confidence prediction
+- Summary of risks
+- Key contributing factors affecting the prediction
+- Support recommendations
+- Medical disclaimer
+
+## PDF Design Requirements
 
 Reports should be:
 
-Printable
-Structured
-Professional
-Easy to read
+- Printable
+- Structured
+- Professional
+- Easy to read
 
 Use:
 
-ReportLab
-Architecture Requirements
-Project Structure
+- ReportLab
 
-Use a modular architecture like this:
+# Architecture Requirements
 
+## Project Structure
+
+```text
 phq9-xai-platform/
 ├── app/
 │   ├── __init__.py              # Application factory
@@ -324,154 +365,163 @@ phq9-xai-platform/
 ├── .env.example
 ├── requirements.txt
 └── README.md
-Concerns for Separation
+```
+
+## Separation of Concerns
 
 Separate logic into dedicated modules for:
 
-Route handling
-Model loading
-Prediction logic
-SHAP explanation generation
-Suggestion generation
-PDF report generation
-Utility helpers
-Configuration management
+- Route handling
+- Model loading
+- Prediction logic
+- SHAP explanation generation
+- Suggestion generation
+- PDF report generation
+- Utility helpers
+- Configuration management
 
-The system needs to avoid a monolithic architecture.
+The system must avoid a monolithic architecture.
 
-Requirements for Scalability and Performance
+# Scalability and Performance Requirements
 
 The application needs to:
 
-Support a scalable deployment.
-Avoid irrelevant computation during inference.
-Optimize preprocessing pipelines for inference efficiency and consistency
-It should use reusable helper functions.
-It should ensure predictions are generated quickly with minimal response delay
-Support the expansion of future features cleanly.
-Requirements for Code Quality
+- Support scalable deployment.
+- Avoid irrelevant computation during inference.
+- Optimize preprocessing pipelines for inference efficiency and consistency.
+- Use reusable helper functions.
+- Ensure predictions are generated quickly with minimal response delay.
+- Support clean expansion of future features.
+
+# Code Quality Requirements
 
 The project needs to:
 
-Use clean and readable code.
-Follow the principle of modular design.
-Try to avoid repeated logic.
-Do not use hardcoded paths.
-Use reusable helper functions.
-Have clear naming conventions.
-Add docstrings where appropriate.
-Maintain production-quality structure.
+- Use clean and readable code.
+- Follow modular design principles.
+- Avoid repeated logic.
+- Avoid hardcoded paths.
+- Use reusable helper functions.
+- Maintain clear naming conventions.
+- Add docstrings where appropriate.
+- Maintain a production-quality structure.
 
 The codebase must not:
 
-Use fake placeholder logic.
-Do not invent nonexistent modules, APIs, datasets, or unsupported functionality.
-Include fabricated functionality.
-Requirements for Error Handling
+- Use fake placeholder logic.
+- Invent nonexistent modules, APIs, datasets, or unsupported functionality.
+- Include fabricated functionality.
 
-Handle elegantly:
+# Error Handling Requirements
 
-The dataset schema is invalid
-Values missing
-False user inputs
-Improper predictions
-SHAP Loading Failure
-Failed to generate PDF
-Unexpected backend processing failures
+Handle gracefully:
+
+- Invalid dataset schema
+- Missing values
+- Incorrect user inputs
+- Improper predictions
+- SHAP loading failure
+- Failed PDF generation
+- Unexpected backend processing failures
 
 The system must:
 
-Return structured error responses.
-Log failure as appropriate.
-More accurate display of user-friendly frontend errors.
+- Return structured error responses.
+- Log failures appropriately.
+- Display user-friendly frontend errors accurately.
 
-All error responses must follow this structure:
+## Error Response Format
 
+```json
 {
   "error": true,
   "message": "User-safe description of the issue",
   "code": 400
 }
-Technology Stack
-For Machine Learning
+```
+
+# Technology Stack
+
+## Machine Learning
 
 Use:
 
-Python
-NumPy
-Pandas
-SHAP
-Scikit-learn
-XGBoost
-For Backend
+- Python
+- NumPy
+- Pandas
+- SHAP
+- Scikit-learn
+- XGBoost
+
+## Backend
 
 Use:
 
-Flask
-Gunicorn
-dotenv
-For Frontend
+- Flask
+- Gunicorn
+- dotenv
+
+## Frontend
 
 Use:
 
-HTML
-CSS
-JavaScript
-For Reporting
+- HTML
+- CSS
+- JavaScript
+
+## Reporting
 
 Use:
 
-ReportLab
-Optional Database Support
+- ReportLab
 
-Optional database supports:
+## Optional Database Support
 
-MongoDB
-PostgreSQL
-Requirements for Output
+Optional database support:
+
+- MongoDB
+- PostgreSQL
+
+# Output Requirements
 
 Generate the project in the following order:
 
-The directory structure
-The source code for the training pipeline
-save/load logic
-Flask backend implementation.
-HTML front-end
-Styling utilizing CSS
-JavaScript frontend logic.
-SHAP explanation logic
-PDF generation logic
-requirements.txt
-README.md
-Instructions for installation
+1. Directory structure
+2. Source code for the training pipeline
+3. Save/load logic
+4. Flask backend implementation
+5. HTML frontend
+6. CSS styling
+7. JavaScript frontend logic
+8. SHAP explanation logic
+9. PDF generation logic
+10. `requirements.txt`
+11. `README.md`
+12. Installation instructions
 
 If more than one file is generated:
 
-Send that one file at a time.
-State the filenames clearly.
-Make outputs modular and copyable.
-Requirements for Documentation
+- Send one file at a time.
+- State filenames clearly.
+- Make outputs modular and copyable.
+
+# Documentation Requirements
 
 Provide proper documentation for:
 
-Installation process
-Environment variables
-Workflow for model training
-How to run the Flask application
-Deployment steps
-Install dependencies
-Final Engineering Guidelines
+- Installation process
+- Environment variables
+- Workflow for model training
+- How to run the Flask application
+- Deployment steps
+- Dependency installation
 
-Maintain a professional, production-grade standard.
+# Final Engineering Guidelines
 
-Organize your specifications into sections rather than paragraphs.
-
-Put correctness, maintainability, and scalability first.
-
-Make sure that all elements follow the architecture you defined.
-
-Realistic and production-like whole project.
-
-Ensure the system maintains an ethical, calm, supportive, and emotionally safe tone.
-
-The final implementation must follow production-grade engineering standards with functional Explainable AI integration suitable for real-world deployment scenarios
+- Maintain a professional, production-grade standard.
+- Organize specifications into sections rather than paragraphs.
+- Prioritize correctness, maintainability, and scalability.
+- Ensure all elements follow the defined architecture.
+- Build a realistic, production-like project.
+- Maintain an ethical, calm, supportive, and emotionally safe tone throughout the system.
+- Ensure the final implementation follows production-grade engineering standards with functional Explainable AI integration suitable for real-world deployment scenarios.
